@@ -29,13 +29,12 @@ status:
     type: ClusterSetEmpty
 
 ```
-
 Let's take a look at the other objects:
 
 * ManagedClusterSetBinding and 
 * (Global)Namespace
 
-The binding is a connection between ClusterSet and GlobalNamespace
+The binding is a connection between the `ClusterSet` and `Global` Namespace
 
 ```
 oc get ManagedClusterSetBinding global -n open-cluster-management-global-set -oyaml
@@ -55,9 +54,7 @@ status:
     type: Bound
 ```
 
-
 As mentioned all of the above resources are created by default, this already helps for starting quickly and easy when it comes to deploy applications.
-
 
 ## What resources still need to be created
 
@@ -66,7 +63,7 @@ As mentioned all of the above resources are created by default, this already hel
 
 In the following we are discussing two configuration options and explain the differences:
 
-3. tuning options Gitops-Operator (cluster-scroped namespace versus Managed-by)
+### tuning options Gitops-Operator (cluster-scroped namespace versus Managed-by)
 
 Argo can operate in two dfferent modes: `Namespace` and `Cluster`. For security reasons the namespaces to enable for Cluster mode can only be done in the subscription.
 The `ARGOCD_CLUSTER_CONFIG_NAMESPACES` grants the specific Argo CD instance cluster-wider privileges (including setting up ClusterRoles), while the label approach only grants access to the labeled namespaces.
@@ -116,10 +113,14 @@ spec:
 
 * Migrate from `PlacementRules` to `Placement` using `PolicyGenerator`
 
-Show PlacementRule field in PolicyGenerator
+As mentioned we also want to deploy RHACM-Policies. For this we are using PolicyGenerator:
+https://github.com/stolostron/policy-generator-plugin/blob/main/docs/policygenerator-reference.yaml
 
-Show PlacementField in PolicyGenerator
+You can either specify a name (when the object already exists in the Cluster) or a path in the Gitrepo
+to apply the objects. See: placementPath,placementName or placementRulePath and placementRuleName.
 
+You see in above file that there is both the option to set a PlacementRule or a Placement.
+This is more or less all you need to know for migrating between the two objects
 Mention that Placement must exist
 
 ## finally deploy the ApplicationSet and inspect it from ACM-UI and ArgoCD-UI
