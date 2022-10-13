@@ -1,18 +1,18 @@
 # Quickly deploying ApplicationSets into the new global-namespace using RHACM 
 
-Starting with  RHACM 2.6 we introduced a new global clusterset
-
-In the following we would like to explain why this has been done, and use this new GlobalSet to quickly deploy on ApplicationSet
-in the global-namespace 
+Starting with  RHACM 2.6 we introduced a new global clusterset and in the following we would like to explain why this has been done, and use this new Global `ClusterSet` to quickly deploy on ApplicationSet
+in the global-namespace. 
 
 In the following you will learn:
 
 1. What resources are provided out of the box
 
-starting with RHACM there is a namespace called open-cluster-management-global-set and a ManagedClusterSetBinding called global to bind the global ManagedClusterSet to the open-cluster-management-global-set namespace. You can read here
-https://access.redhat.com/documentation/en-us/red_hat_advanced_cluster_management_for_kubernetes/2.6/html-single/multicluster_engine/index#managedclustersets_global
+Starting with RHACM there is a namespace called `open-cluster-management-global-set` and a `ManagedClusterSetBinding` called `global` to bind the global ManagedClusterSet to the `open-cluster-management-global-set` namespace. You can read [here](https://access.redhat.com/documentation/en-us/red_hat_advanced_cluster_management_for_kubernetes/2.6/html-single/multicluster_engine/index#managedclustersets_global)
 
-Global-ClusterSet
+
+See here how the Global-ClusterSet looks like. While you can only assign a Cluster to a single ClusterSet, each Cluster is also part of the Global-ClusterSet so in the below
+example 9 Clusters (always all in the fleet) are assigned to it.
+
 
 ```
 oc get ManagedClusterSet global -oyaml
@@ -34,12 +34,13 @@ status:
 
 ```
 
-While you can only assign a Cluster to a single ClusterSet, each Cluster is also part of the Global-ClusterSet
+Let's take a look at the other objects:
 
-* GlobalBinding and 
-* GlobalNamespace
+* ManagedClusterSetBinding and 
+* (Global)Namespace
 
 The binding is a connection between ClusterSet and GlobalNamespace
+
 
 ```
 oc get ManagedClusterSetBinding global -n open-cluster-management-global-set -oyaml
@@ -59,12 +60,23 @@ status:
     type: Bound
 ```
 
+
+As mentioned all of the above resources are created by default, this already helps for starting quickly and easy when it comes to deploy applications.
+
+
 2. What resources still need to be created
 
 * Gitops-Cluster-Resource
 * Placements
 
+In the following we are discussing two Configuration Options and explain the differences:
+
+
+
 3. tuning options Gitops-Operator (cluster-scroped namespace versus Managed-by)
+
+A:  making open-cluster-management-global-set a ClusterScopedNamespace for GitopsOperator
+
 
 ```
 apiVersion: operators.coreos.com/v1alpha1
@@ -84,6 +96,8 @@ spec:
         value: 'openshift-gitops, open-cluster-management-global-set'
 ```
 
+
+B: Manage the open-cluster-management-global-set by the dedault openshift-gitops instance
 
 To allow for the `global-namespace` above to be managed by OpenShift GitOps, we have labeled them with the following:
 
@@ -123,7 +137,6 @@ Mention that Placement must exist
 6. Deploy another ApplicationSet just for Policies and bootstrap the two ApplicationSets using AppOfApps Pattern
 
 * If you deploy an ApplicationSet only to the Hub, you might also consider just using an ArgoCD-Application, but it's nice to show for demo-purposes.
-
 
 
 
