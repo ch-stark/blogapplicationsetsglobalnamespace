@@ -3,6 +3,9 @@
 Starting with  RHACM 2.6 we introduced a new global clusterset and in the following we would like to explain why this has been done, and use this new Global `ClusterSet` to quickly deploy on ApplicationSet
 in the global-namespace. As a Side Info you will learn how to use Placement-Objects (and why/how you can migrate from PlacementRule-Objects) as well as how to deploy RHACM using Policy-Generator while not allowing PlacementRules to be deployed.
 
+Multitenancy is a very important topic when working with a MultiClusterManagement solution. RHACM offers great concepts to achieve this but there are usecases where you want to have a shared view to the whole fleet of Clusters and for that reasons
+we provided a new global-namespace, to give users also some kind of `Quick-Start`.
+
 ## What resources are provided out of the box
 
 Starting with RHACM there is a namespace called `open-cluster-management-global-set` and a `ManagedClusterSetBinding` called `global` to bind the global ManagedClusterSet to the `open-cluster-management-global-set` namespace. You can read [here](https://access.redhat.com/documentation/en-us/red_hat_advanced_cluster_management_for_kubernetes/2.6/html-single/multicluster_engine/index#managedclustersets_global)
