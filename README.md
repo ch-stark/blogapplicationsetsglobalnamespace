@@ -13,8 +13,34 @@ starting with RHACM there is a namespace called open-cluster-management-global-s
 https://access.redhat.com/documentation/en-us/red_hat_advanced_cluster_management_for_kubernetes/2.6/html-single/multicluster_engine/index#managedclustersets_global
 
 * Global-ClusterSet
+```
+oc get ManagedClusterSet global -oyaml
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: ManagedClusterSet
+metadata:
+  name: global
+spec:
+  clusterSelector:
+    labelSelector: {}
+    selectorType: LabelSelector
+status:
+  conditions:
+  - lastTransitionTime: "2022-09-13T18:49:31Z"
+    message: 9 ManagedClusters selected
+    reason: ClustersSelected
+    status: "False"
+    type: ClusterSetEmpty
+
+```
+
+
+
 
 While you can only assign a Cluster to a single ClusterSet, each Cluster is also part of the Global-ClusterSet
+
+
+
+
 
 * GlobalBinding and * GlobalNamespace
 
