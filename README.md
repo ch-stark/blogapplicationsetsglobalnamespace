@@ -12,10 +12,18 @@ In the following you will learn:
 
 
 2. What resources still need to be created
-3. tuning options Gitops-Operator (cluster-scroped namespace versus Managed-by)
-4. Disabling Placement-Rules and Migrating Placement-Rules to Placement using PolicyGenerator
-5. finally deploy the ApplicationSet and inspect it from ACM-UI and ArgoCD-UI
-6. Deploy another ApplicationSet just for Policies and bootstrap the two ApplicationSets using AppOfApps Pattern
+
+
+
+* Gitops-Cluster-Resource
+* Placements
+
+
+
+4. tuning options Gitops-Operator (cluster-scroped namespace versus Managed-by)
+5. Disabling Placement-Rules and Migrating Placement-Rules to Placement using PolicyGenerator
+6. finally deploy the ApplicationSet and inspect it from ACM-UI and ArgoCD-UI
+7. Deploy another ApplicationSet just for Policies and bootstrap the two ApplicationSets using AppOfApps Pattern
 
 
 
