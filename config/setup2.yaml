@@ -10,27 +10,34 @@ spec:
   name: openshift-gitops-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+   name: open-cluster-management-global-set
+labels:
+    argocd.argoproj.io/managed-by: openshift-gitops   
 ---  
 apiVersion: apps.open-cluster-management.io/v1beta1
 kind: GitOpsCluster
 metadata:
   name: global 
-  namespace: openshift-gitops
+  namespace: open-cluster-management-global-set
 spec:
   argoServer:
     cluster: local-cluster
-    argoNamespace: open-cluster-management-global-set 
+    argoNamespace: openshift-gitops 
   placementRef:
     kind: Placement
     apiVersion: cluster.open-cluster-management.io/v1beta1
     name: global-appset-placement 
-    namespace: openshift-gitops
+    namespace: open-cluster-management-global-set
 ---
 apiVersion: cluster.open-cluster-management.io/v1beta1
 kind: Placement
 metadata:
   name: global-appset-placement 
-  namespace: openshift-gitops
+  namespace: open-cluster-management-global-set
 spec:
   predicates:
   - requiredClusterSelector:
