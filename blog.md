@@ -41,7 +41,6 @@ Let's take a look at the other objects:
 
 The binding is a connection between ClusterSet and GlobalNamespace
 
-
 ```
 oc get ManagedClusterSetBinding global -n open-cluster-management-global-set -oyaml
 apiVersion: cluster.open-cluster-management.io/v1beta1
@@ -71,12 +70,12 @@ As mentioned all of the above resources are created by default, this already hel
 
 In the following we are discussing two Configuration Options and explain the differences:
 
-
-
 3. tuning options Gitops-Operator (cluster-scroped namespace versus Managed-by)
 
-A:  making open-cluster-management-global-set a ClusterScopedNamespace for GitopsOperator
+The ARGOCD_CLUSTER_CONFIG_NAMESPACESgrants the specific Argo CD instance cluster-wider privileges (including setting up ClusterRoles), while the label approach only grants access to the labeled namespaces
 
+
+A:  making open-cluster-management-global-set a ClusterScopedNamespace for GitopsOperator
 
 ```
 apiVersion: operators.coreos.com/v1alpha1
