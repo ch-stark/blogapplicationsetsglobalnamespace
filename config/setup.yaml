@@ -40,7 +40,7 @@ spec:
   - requiredClusterSelector:
       labelSelector:
         matchExpressions:
-          - {key: vendor, operator: In, values: ["OpenShift"]}
+          - {key: useglobal, operator: In, values: ["true"]}
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: ArgoCD
