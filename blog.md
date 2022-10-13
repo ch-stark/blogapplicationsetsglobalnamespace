@@ -113,11 +113,11 @@ spec:
 
 * Migrate from `PlacementRules` to `Placement` using `PolicyGenerator`
 
-As mentioned we also want to deploy RHACM-Policies. For this we are using PolicyGenerator:
-https://github.com/stolostron/policy-generator-plugin/blob/main/docs/policygenerator-reference.yaml
+As mentioned we also want to deploy RHACM-Policies. For this we are using PolicyGenerator. See here it's
+[reference file](https://github.com/stolostron/policy-generator-plugin/blob/main/docs/policygenerator-reference.yaml)
 
 You can either specify a name (when the object already exists in the Cluster) or a path in the Gitrepo
-to apply the objects. See: placementPath,placementName or placementRulePath and placementRuleName.
+to apply the objects. See: `placementPath`,`placementName` or `placementRulePath` and `placementRuleName`.
 
 You see in above file that there is both the option to set a PlacementRule or a Placement.
 This is more or less all you need to know for migrating between the two objects
