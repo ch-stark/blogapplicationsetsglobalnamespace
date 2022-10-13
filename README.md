@@ -9,9 +9,16 @@ In the following you will learn:
 
 1. What resources are provided out of the box
 
+starting with RHACM there is a namespace called open-cluster-management-global-set and a ManagedClusterSetBinding called global to bind the global ManagedClusterSet to the open-cluster-management-global-set namespace. You can read here
+https://access.redhat.com/documentation/en-us/red_hat_advanced_cluster_management_for_kubernetes/2.6/html-single/multicluster_engine/index#managedclustersets_global
+
 * Global-ClusterSet
-* GlobalBinding
-* GlobalNamespace
+
+While you can only assign a Cluster to a single ClusterSet, each Cluster is also part of the Global-ClusterSet
+
+* GlobalBinding and * GlobalNamespace
+
+The binding is a connection between ClusterSet and GlobalNamespace
 
 2. What resources still need to be created
 
@@ -19,6 +26,8 @@ In the following you will learn:
 * Placements
 
 3. tuning options Gitops-Operator (cluster-scroped namespace versus Managed-by)
+
+
 
 4. Disabling Placement-Rules and Migrating Placement-Rules to Placement using PolicyGenerator
 
@@ -41,3 +50,8 @@ spec:
 
 6. Deploy another ApplicationSet just for Policies and bootstrap the two ApplicationSets using AppOfApps Pattern
 * If you deploy an ApplicationSet only to the Hub, you might also consider just using an ArgoCD-Application, but it's nice to show for demo-purposes.
+
+
+
+
+
