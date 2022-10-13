@@ -91,12 +91,11 @@ spec:
 
 #### Manage the `open-cluster-management-global-set` namespace by the dedault openshift-gitops instance
 
-To allow for the above namespace to be managed by OpenShift GitOps, we have labeled them with the following:
+To allow for the above namespace to be managed by OpenShift GitOps, we have label it as documented [here](https://docs.openshift.com/container-platform/4.11/cicd/gitops/setting-up-argocd-instance.html#gitops-deploy-resources-different-namespaces_setting-up-argocd-instance)
 
 ```
 oc label namespace open-cluster-management-global-set argocd.argoproj.io/managed-by=openshift-gitops
 ```
-
 
 ## Disabling Placement-Rules and Migrating Placement-Rules to Placement using PolicyGenerator
 
@@ -130,9 +129,9 @@ Mention that Placement must exist
 * If you deploy an ApplicationSet only to the Hub, you might also consider just using an ArgoCD-Application, but it's nice to show for demo-purposes.
 
 
-Closing words:
+## Closing words:
 
-##
+
 
 
 
