@@ -1,4 +1,4 @@
-# blogapplicationsetsglobalnamespace
+# Quickly deploying ApplicationSets into the new global-namespace using RHACM 
 
 Starting with  RHACM 2.6 we introduced a new global clusterset
 
