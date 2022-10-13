@@ -34,17 +34,28 @@ status:
 ```
 
 
-
-
 While you can only assign a Cluster to a single ClusterSet, each Cluster is also part of the Global-ClusterSet
-
-
-
-
 
 * GlobalBinding and * GlobalNamespace
 
 The binding is a connection between ClusterSet and GlobalNamespace
+
+oc get ManagedClusterSetBinding global -n open-cluster-management-global-set -oyaml
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: ManagedClusterSetBinding
+metadata:
+  name: global
+  namespace: open-cluster-management-global-set
+spec:
+  clusterSet: global
+status:
+  conditions:
+  - lastTransitionTime: "2022-09-13T18:49:32Z"
+    message: ""
+    reason: ClusterSetBound
+    status: "True"
+    type: Bound
+
 
 2. What resources still need to be created
 
