@@ -94,7 +94,7 @@ spec:
 
 #### Manage the `open-cluster-management-global-set` namespace by the dedault openshift-gitops instance
 
-To allow for the above namespace to be managed by OpenShift GitOps, we have label it as documented [here](https://docs.openshift.com/container-platform/4.11/cicd/gitops/setting-up-argocd-instance.html#gitops-deploy-resources-different-namespaces_setting-up-argocd-instance)
+To allow Argo CD to manage resources in other namespaces apart from where it is installed, configure the target namespace with a argocd.argoproj.io/managed-by label as documented [here](https://docs.openshift.com/container-platform/4.11/cicd/gitops/setting-up-argocd-instance.html#gitops-deploy-resources-different-namespaces_setting-up-argocd-instance)
 
 ```
 ---
