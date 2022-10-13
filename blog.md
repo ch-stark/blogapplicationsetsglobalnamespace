@@ -97,7 +97,13 @@ spec:
 To allow for the above namespace to be managed by OpenShift GitOps, we have label it as documented [here](https://docs.openshift.com/container-platform/4.11/cicd/gitops/setting-up-argocd-instance.html#gitops-deploy-resources-different-namespaces_setting-up-argocd-instance)
 
 ```
-oc label namespace open-cluster-management-global-set argocd.argoproj.io/managed-by=openshift-gitops
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: open-cluster-management-global-set
+labels:
+  argocd.argoproj.io/managed-by: openshift-gitops   
 ```
 
 ## Disabling Placement-Rules and Migrating Placement-Rules to Placement using PolicyGenerator
@@ -134,9 +140,8 @@ Mention that Placement must exist
 
 ## Closing words:
 
-
-
-
+To summarize we wanted to show you how quickly and easy you can deploy Applications using RHACM to a fleet of Clusters.  Additionally we wanted to explain some additional concepts highlighting
+the evolution of the Product (e.g PlacementRule-->Placement).
 
 
 
