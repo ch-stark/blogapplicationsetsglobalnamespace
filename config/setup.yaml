@@ -103,10 +103,11 @@ metadata:
   namespace: open-cluster-management-global-set
 subjects:
 - kind: ServiceAccount
-  name: argopolicies-applicationset-controller
+  name: globalns-applicationset-controller
   namespace: open-cluster-management-global-set
 roleRef:
   kind: Role
   name: permissions
+  namespace: open-cluster-management-global-set
   apiGroup: rbac.authorization.k8s.io
 
