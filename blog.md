@@ -1,14 +1,14 @@
 # Quickly deploying ApplicationSets into RHACM's new global-namespace  
 
 Starting with  RHACM 2.6 we introduced a new global clusterset and in the following we would like to explain why this has been done, and use this new Global `ClusterSet` to quickly deploy on ApplicationSet
-in the global-namespace. As a Side Info you will learn how to use Placement-Objects (and why/how you can migrate from PlacementRule-Objects) as well as how to deploy RHACM using Policy-Generator while not allowing PlacementRules to be deployed.
+in the global-namespace. As a side-information you will learn how to use Placement-Objects (and why/how you can migrate from PlacementRule-Objects) as well as how to deploy RHACM using Policy-Generator while not allowing PlacementRules to be deployed.
 
-Multitenancy is a very important topic when working with a MultiClusterManagement solution. RHACM offers great concepts to achieve this but there are usecases where you want to have a shared view to the whole fleet of Clusters and for that reasons
+Multitenancy is a very important topic when working with a Multi-Cluster-Management solution. RHACM offers great concepts to achieve this but there are usecases where you want to have a shared view to the whole fleet of Clusters and for that reasons
 we provided a new global-namespace, to give users also some kind of `Quick-Start`.
 
 ## What resources are provided out of the box
 
-Starting with RHACM there is a namespace called `open-cluster-management-global-set` and a `ManagedClusterSetBinding` called `global` to bind the global ManagedClusterSet to the `open-cluster-management-global-set` namespace. You can read [here](https://access.redhat.com/documentation/en-us/red_hat_advanced_cluster_management_for_kubernetes/2.6/html-single/multicluster_engine/index#managedclustersets_global)
+Starting with RHACM 2.6  there is a namespace called `open-cluster-management-global-set` and a `ManagedClusterSetBinding` called `global` to bind the global ManagedClusterSet to the `open-cluster-management-global-set` namespace. You can read [here](https://access.redhat.com/documentation/en-us/red_hat_advanced_cluster_management_for_kubernetes/2.6/html-single/multicluster_engine/index#managedclustersets_global)
 
 See here how the `global` ClusterSet looks like. While you can only assign a Cluster to a single ClusterSet, each Cluster is also part of the Global-ClusterSet so in the below
 example 9 Clusters (always all in the fleet) are assigned to it.
@@ -62,13 +62,53 @@ As mentioned all of the above resources are created by default, this already hel
 ## What resources still need to be created
 
 * Gitops-Cluster-Resource
+
+This resource provides a Connection between ArgoCD-Server and the Placement (where to deploy exactly the Application).  
+
+```
+---  
+apiVersion: apps.open-cluster-management.io/v1beta1
+kind: GitOpsCluster
+metadata:
+  name: global 
+  namespace: open-cluster-management-global-set 
+spec:
+  argoServer:
+    cluster: local-cluster
+    argoNamespace: open-cluster-management-global-set 
+  placementRef:
+    kind: Placement
+    apiVersion: cluster.open-cluster-management.io/v1beta1
+    name: global-appset-placement 
+    namespace: open-cluster-management-global-set 
+```
+
 * Placements
+
+See here a Placement example which deploys to a fleet of Clusters, where the Clusters needs to be labeled with `useglobal=true`.
+
+```
+---
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: Placement
+metadata:
+  name: global-appset-placement 
+  namespace: open-cluster-management-global-set 
+spec:
+  predicates:
+  - requiredClusterSelector:
+      labelSelector:
+        matchExpressions:
+          - {key: useglobal, operator: In, values: ["true"]}
+```
+
+
+## Configuration Options regarding Gitops-Operator
+
 
 In the following we are discussing two configuration options and explain the differences:
 
-### tuning options Gitops-Operator (cluster-scroped namespace versus Managed-by)
-
-Argo can operate in two dfferent modes: `Namespace` and `Cluster`. For security reasons the namespaces to enable for Cluster mode can only be done in the subscription.
+ArgoCD can operate in two dfferent modes: `Namespace` and `Cluster`. For security reasons the namespaces to enable for Cluster mode can only be done in the subscription.
 The `ARGOCD_CLUSTER_CONFIG_NAMESPACES` grants the specific Argo CD instance cluster-wider privileges (including setting up ClusterRoles), while the label approach only grants access to the labeled namespaces.
 
 
@@ -92,9 +132,9 @@ spec:
         value: 'openshift-gitops, open-cluster-management-global-set'
 ```
 
-#### Manage the `open-cluster-management-global-set` namespace by the dedault openshift-gitops instance
+#### Manage the `open-cluster-management-global-set` namespace by the dedault `openshift-gitops` instance
 
-To allow Argo CD to manage resources in other namespaces apart from where it is installed, configure the target namespace with a argocd.argoproj.io/managed-by label as documented [here](https://docs.openshift.com/container-platform/4.11/cicd/gitops/setting-up-argocd-instance.html#gitops-deploy-resources-different-namespaces_setting-up-argocd-instance)
+To allow Argo CD to manage resources in other namespaces apart from where it is installed, configure the target namespace with a `argocd.argoproj.io/managed-by` label as documented [here](https://docs.openshift.com/container-platform/4.11/cicd/gitops/setting-up-argocd-instance.html#gitops-deploy-resources-different-namespaces_setting-up-argocd-instance)
 
 ```
 ---
@@ -108,9 +148,10 @@ labels:
 
 ## Disabling Placement-Rules and Migrating Placement-Rules to Placement using PolicyGenerator
 
-At one point in time in the future PlacementRules are going to be deprecated. We already now want to disable them as we want to force the users to work with Placement objects. Note that ApplicationSets in ACM only work with Placement but there are some other artifacts like Subscription and Policies which still default to PlacementRule
+At one point in time in the future `PlacementRules` are going to be deprecated. Already now we want to disable them as we like to force the users to work with Placement objects. 
+Note that ApplicationSets in ACM only work with Placement but there are some other artifacts like Subscriptions and Policies which still default to `PlacementRule` Object.
 
-For disabling just set on the AppProject level in ArgoCD:
+For disabling just set e.g. on the `AppProject` level in ArgoCD:
 
 ```
 spec:
@@ -124,25 +165,27 @@ spec:
 As mentioned we also want to deploy RHACM-Policies. For this we are using PolicyGenerator. See here it's
 [reference file](https://github.com/stolostron/policy-generator-plugin/blob/main/docs/policygenerator-reference.yaml)
 
+You see in above file that there is both the option to set a PlacementRule or a Placement.
 You can either specify a name (when the object already exists in the Cluster) or a path in the Gitrepo
 to apply the objects. See: `placementPath`,`placementName` or `placementRulePath` and `placementRuleName`.
 
-You see in above file that there is both the option to set a PlacementRule or a Placement.
-This is more or less all you need to know for migrating between the two objects
-Mention that Placement must exist
+
+This is more or less all you need to know for migrating between the two objects.
 
 ## finally deploy the ApplicationSet and inspect it from ACM-UI and ArgoCD-UI
+
 
 ## Deploy another ApplicationSet just for Policies and bootstrap the two ApplicationSets using AppOfApps Pattern
 
 * If you deploy an ApplicationSet only to the Hub, you might also consider just using an ArgoCD-Application, but it's nice to show for demo-purposes.
 
 
+Let's verify that you cannot process PlacementRules via Git.
+
 ## Closing words:
 
 To summarize we wanted to show you how quickly and easy you can deploy Applications using RHACM to a fleet of Clusters.  Additionally we wanted to explain some additional concepts highlighting
 the evolution of the Product (e.g PlacementRule-->Placement).
-
 
 
 
