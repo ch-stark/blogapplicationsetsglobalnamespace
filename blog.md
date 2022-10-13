@@ -69,7 +69,7 @@ Argo can operate in two dfferent modes: `Namespace` and `Cluster`. For security 
 The `ARGOCD_CLUSTER_CONFIG_NAMESPACES` grants the specific Argo CD instance cluster-wider privileges (including setting up ClusterRoles), while the label approach only grants access to the labeled namespaces.
 
 
-###  making `open-cluster-management-global-set` a Cluster-Scoped-Namespace for GitopsOperator
+####  making `open-cluster-management-global-set` a Cluster-Scoped-Namespace for GitopsOperator
 
 ```
 apiVersion: operators.coreos.com/v1alpha1
@@ -89,7 +89,7 @@ spec:
         value: 'openshift-gitops, open-cluster-management-global-set'
 ```
 
-### Manage the `open-cluster-management-global-set` namespace by the dedault openshift-gitops instance
+#### Manage the `open-cluster-management-global-set` namespace by the dedault openshift-gitops instance
 
 To allow for the above namespace to be managed by OpenShift GitOps, we have labeled them with the following:
 
