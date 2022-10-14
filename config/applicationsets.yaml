@@ -23,7 +23,7 @@ spec:
       project: default
       source:
         path: book-import
-        repoURL: https://github.com/cdoan1/application-samples.git
+        repoURL: https://github.com/ch-stark/application-samples.git
         targetRevision: main
       syncPolicy:
         automated:
