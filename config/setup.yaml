@@ -53,6 +53,15 @@ spec:
   # This enables the ArgoCD instance to use OpenShift OAuth
   dex:
     openShiftOAuth: true
+  resourceExclusions: |
+    - apiGroups:
+      - tekton.dev
+      clusters:
+      - '*'
+      kinds:
+      - TaskRun
+      - PipelineRun
+      - PlacementRule    
   server:
     route:
       enabled: true
