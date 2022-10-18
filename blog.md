@@ -8,10 +8,9 @@ we provided a new global-namespace, to give users also some kind of `Quick-Start
 
 ## What resources are provided out of the box
 
-Starting with RHACM 2.6  there is a namespace called `open-cluster-management-global-set` and a `ManagedClusterSetBinding` called `global` to bind the global ManagedClusterSet to the `open-cluster-management-global-set` namespace. You can read [here](https://access.redhat.com/documentation/en-us/red_hat_advanced_cluster_management_for_kubernetes/2.6/html-single/multicluster_engine/index#managedclustersets_global)
+Starting with RHACM 2.6  there is a namespace called `open-cluster-management-global-set` and a `ManagedClusterSetBinding` called `global` to bind the global ManagedClusterSet to the `open-cluster-management-global-set` namespace. You can read more [here](https://access.redhat.com/documentation/en-us/red_hat_advanced_cluster_management_for_kubernetes/2.6/html-single/multicluster_engine/index#managedclustersets_global) in the documentation.
 
-See here how the `global` ClusterSet looks like. While you can only assign a Cluster to a single ClusterSet, each Cluster is also part of the Global-ClusterSet so in the below
-example 9 Clusters (always all in the fleet) are assigned to it.
+See below how the `global` ClusterSet looks like. While you can only assign a Cluster to a single ClusterSet, each Cluster is also part of the `global` ClusterSet so in the below example 9 Clusters (always all in the fleet) are assigned to it.
 
 ```
 oc get ManagedClusterSet global -oyaml
@@ -37,7 +36,7 @@ Let's take a look at the other objects:
 * ManagedClusterSetBinding and 
 * (Global)Namespace
 
-The binding is a connection between the `ClusterSet` and `Global` Namespace
+The `ManagedClusterSetBinding` is a connection between the `ClusterSet` and `Global` Namespace.
 
 ```
 oc get ManagedClusterSetBinding global -n open-cluster-management-global-set -oyaml
@@ -106,11 +105,8 @@ spec:
 ## Configuration Options regarding Gitops-Operator
 
 
-In the following we are discussing two configuration options and explain the differences:
-
 ArgoCD can operate in two dfferent modes: `Namespace` and `Cluster`. For security reasons the namespaces to enable for Cluster mode can only be done in the subscription.
 The `ARGOCD_CLUSTER_CONFIG_NAMESPACES` grants the specific Argo CD instance cluster-wider privileges (including setting up ClusterRoles), while the label approach only grants access to the labeled namespaces.
-
 
 ####  making `open-cluster-management-global-set` a Cluster-Scoped-Namespace for GitopsOperator
 
