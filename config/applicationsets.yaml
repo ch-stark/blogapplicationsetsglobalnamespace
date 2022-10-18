@@ -22,9 +22,9 @@ spec:
         server: "{{server}}"
       project: default
       source:
-        path: book-import
-        repoURL: https://github.com/ch-stark/application-samples.git
-        targetRevision: main
+        path: apps/bgd/overlays/bgdk
+        repoURL: 'https://github.com/RedHat-EMEA-SSA-Team/ns-apps/'
+        targetRevision: single-app
       syncPolicy:
         automated:
           prune: true
