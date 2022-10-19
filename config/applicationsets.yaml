@@ -32,3 +32,39 @@ spec:
         syncOptions:
           - CreateNamespace=true
           - PruneLast=true
+---          
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: globalappsetpolicies
+  namespace: open-cluster-management-global-set
+spec:
+  generators:
+    - clusterDecisionResource:
+        configMapRef: acm-placement
+        labelSelector:
+          matchLabels:
+            cluster.open-cluster-management.io/placement: global-appset-policies-placement
+        requeueAfterSeconds: 180
+  template:
+    metadata:
+      name: globalappsetpolicies-{{name}}
+      labels:
+        velero.io/exclude-from-backup: "true"
+    spec:
+      destination:
+        namespace: remote
+        server: "{{server}}"
+      project: default
+      source:
+        path: apps/bgd/overlays/bgdk
+        repoURL: 'https://github.com/ch-stark/ns-apps/'
+        targetRevision: single-app
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - PruneLast=true          
+          
