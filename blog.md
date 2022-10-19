@@ -127,6 +127,11 @@ spec:
       - name: ARGOCD_CLUSTER_CONFIG_NAMESPACES
         value: 'openshift-gitops, open-cluster-management-global-set'
 ```
+
+Please see [here](https://github.com/redhat-developer/gitops-operator/blob/master/docs/OpenShift%20GitOps%20Usage%20Guide.md#default-permissions-provided-to-argo-cd-instance) what ClusterRoles are bound to the namespace.
+
+For enabling access to Open-Cluster-Management resources [see](https://github.com/ch-stark/blogapplicationsetsglobalnamespace/blob/main/config/setup.yaml#L95)
+
 ## Disabling Placement-Rules and Migrating Placement-Rules to Placement using PolicyGenerator
 
 At one point in time in the future `PlacementRules` are going to be deprecated. Already now we want to disable them as we like to force the users to work with Placement objects. 
