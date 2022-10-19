@@ -65,7 +65,6 @@ As mentioned all of the above resources are created by default, this already hel
 This resource provides a Connection between ArgoCD-Server and the Placement (where to deploy exactly the Application).  
 
 ```
----  
 apiVersion: apps.open-cluster-management.io/v1beta1
 kind: GitOpsCluster
 metadata:
