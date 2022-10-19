@@ -93,7 +93,6 @@ spec:
       name: policy-generator
   kustomizeBuildOptions: --enable-alpha-plugins
 ---
----
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -103,9 +102,7 @@ rules:
 - apiGroups: ["apps.open-cluster-management.io", "cluster.open-cluster-management.io"] # "" indicates the core API group
   resources: ["placementrules", "placementdecisions"]
   verbs: ["list"]
-
 ---
-
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
