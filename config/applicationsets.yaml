@@ -59,7 +59,7 @@ spec:
       source:
         chart: policygenerator
         repoURL: https://ch-stark.github.io/helmpolicygenerator/
-        targetRevision: 1.16.0
+        targetRevision: 0.1.0
       syncPolicy:
         automated:
           prune: true
