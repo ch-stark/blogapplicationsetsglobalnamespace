@@ -59,7 +59,7 @@ spec:
       source:
         chart: policies
         repoURL: https://ch-stark.github.io/helm-acm-policies/helm-chart-policies/
-        targetRevision: 0.1.0
+        targetRevision: 0.1.1
       syncPolicy:
         automated:
           prune: true
