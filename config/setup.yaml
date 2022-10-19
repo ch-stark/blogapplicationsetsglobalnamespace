@@ -88,8 +88,7 @@ spec:
       - '*'
       kinds:
       - TaskRun
-      - PipelineRun
-      - PlacementRule    
+      - PipelineRun      
   server:
     route:
       enabled: true
