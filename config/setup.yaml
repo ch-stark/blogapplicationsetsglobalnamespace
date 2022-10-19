@@ -30,6 +30,21 @@ spec:
     name: global-appset-placement 
     namespace: open-cluster-management-global-set 
 ---
+apiVersion: apps.open-cluster-management.io/v1beta1
+kind: GitOpsCluster
+metadata:
+  name: policies 
+  namespace: open-cluster-management-global-set 
+spec:
+  argoServer:
+    cluster: local-cluster
+    argoNamespace: open-cluster-management-global-set 
+  placementRef:
+    kind: Placement
+    apiVersion: cluster.open-cluster-management.io/v1beta1
+    name: global-appset-policies-placement 
+    namespace: open-cluster-management-global-set 
+---
 apiVersion: cluster.open-cluster-management.io/v1beta1
 kind: Placement
 metadata:
@@ -41,6 +56,19 @@ spec:
       labelSelector:
         matchExpressions:
           - {key: useglobal, operator: In, values: ["true"]}
+---          
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: Placement
+metadata:
+  name: global-appset-policies-placement
+  namespace: open-cluster-management-global-set
+spec:
+  predicates:
+  - requiredClusterSelector:
+      labelSelector:
+        matchExpressions:
+          - {key: name, operator: In, values: ["local-cluster"]}          
+          
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: ArgoCD
