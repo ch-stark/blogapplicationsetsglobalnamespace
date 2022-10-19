@@ -128,16 +128,16 @@ spec:
         value: 'openshift-gitops, open-cluster-management-global-set'
 ```
 
-Please see [here](https://github.com/redhat-developer/gitops-operator/blob/master/docs/OpenShift%20GitOps%20Usage%20Guide.md#default-permissions-provided-to-argo-cd-instance) what ClusterRoles are bound to the namespace.
+Please see [here](https://github.com/redhat-developer/gitops-operator/blob/master/docs/OpenShift%20GitOps%20Usage%20Guide.md#default-permissions-provided-to-argo-cd-instance) what RolesBindings are applied to `open-cluster-management-global-set` by setting this property.
 
-For enabling access to Open-Cluster-Management resources [see](https://github.com/ch-stark/blogapplicationsetsglobalnamespace/blob/main/config/setup.yaml#L95)
+For enabling access to Open-Cluster-Management resources [see](https://github.com/ch-stark/blogapplicationsetsglobalnamespace/blob/main/config/setup.yaml#L95) we need to apply additional permissions.
 
 ## Disabling Placement-Rules and Migrating Placement-Rules to Placement using PolicyGenerator
 
-At one point in time in the future `PlacementRules` are going to be deprecated. Already now we want to disable them as we like to force the users to work with Placement objects. 
+At one point in time in the future `PlacementRules` are going to be deprecated. Already now we want to disable them as we like to force the users to work with `Placement` objects. 
 Note that ApplicationSets in ACM only work with Placement but there are some other artifacts like Subscriptions and Policies which still default to `PlacementRule` Object.
 
-For disabling just set e.g. on the `AppProject` level in ArgoCD:
+For disabling there are several options - just set e.g. on the `AppProject` level in ArgoCD:
 
 ```
 spec:
@@ -146,7 +146,7 @@ spec:
       kind: PlacementRule
 ```
 
-* Migrate from `PlacementRules` to `Placement` using `PolicyGenerator`
+## Migrate from `PlacementRules` to `Placement` using `PolicyGenerator`
 
 As mentioned we also want to deploy RHACM-Policies. For this we are using PolicyGenerator. See here it's
 [reference file](https://github.com/stolostron/policy-generator-plugin/blob/main/docs/policygenerator-reference.yaml)
@@ -155,8 +155,8 @@ You see in above file that there is both the option to set a PlacementRule or a 
 You can either specify a name (when the object already exists in the Cluster) or a path in the Gitrepo
 to apply the objects. See: `placementPath`,`placementName` or `placementRulePath` and `placementRuleName`.
 
-
 This is more or less all you need to know for migrating between the two objects.
+
 
 ## finally deploy the ApplicationSet and inspect it from ACM-UI and ArgoCD-UI
 
@@ -165,14 +165,9 @@ This is more or less all you need to know for migrating between the two objects.
 
 * If you deploy an ApplicationSet only to the Hub, you might also consider just using an ArgoCD-Application, but it's nice to show for demo-purposes.
 
-
 Let's verify that you cannot process PlacementRules via Git.
 
 ## Closing words:
 
 To summarize we wanted to show you how quickly and easy you can deploy Applications using RHACM to a fleet of Clusters.  Additionally we wanted to explain some additional concepts highlighting
 the evolution of the Product (e.g PlacementRule-->Placement).
-
-
-
-
