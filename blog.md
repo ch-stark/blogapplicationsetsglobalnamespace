@@ -1,4 +1,4 @@
-# Quickly deploying ApplicationSets into RHACM's new global-namespace  
+# Quickly deploying ApplicationSets using RHACM's new global-clusterset  
 
 Starting with  RHACM 2.6 we introduced a new global clusterset and in the following we would like to explain why this has been done, and use this new Global `ClusterSet` to quickly deploy on ApplicationSet
 in the new global-namespace. As a side-information you will learn how to use Placement-Objects (and why/how you can migrate from PlacementRule-Objects) as well as how to deploy RHACM using Policy-Generator while not allowing PlacementRules to be deployed.
